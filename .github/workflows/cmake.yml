@@ -21,13 +21,6 @@ jobs:
     - name: Check out branch
       uses: actions/checkout@v3
 
-    - name: Install Google Test
-      run: |
-        sudo apt-get install libgtest-dev
-        sudo apt-get install cmake
-        cd /usr/src/gtest
-        sudo cmake CMakeLists.txt
-        sudo make 
     - name: Build and Test
       run: |
         mkdir build
