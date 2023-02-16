@@ -28,13 +28,6 @@ jobs:
         cd /usr/src/gtest
         sudo cmake CMakeLists.txt
         sudo make 
-    # - name: Set environment variables for GTest
-    #   run: |
-    #     export GTEST_ROOT=/usr/src/googletest/googletest
-    #     export GTEST_LIBRARY=/usr/lib/libgtest.a
-    #     export GTEST_INCLUDE_DIR=/usr/include/gtest
-    #     export GTEST_MAIN_LIBRARY=/usr/lib/libgtest_main.a
-
     - name: Build and Test
       run: |
         mkdir build
@@ -42,6 +35,14 @@ jobs:
         cmake ..
         make
         ./calculatorclionpridemic_test
+    - name: Package
+      run: tar czf calculatorclionpridemic.tar.gz -C build/ .
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: calculatorclionpridemic
+        path: calculatorclionpridemic.tar.gz
     - name: Build Docker image
       run: docker build -t projectdatics/calculatorclionpridemic:latest .
     - name: Push Docker image
