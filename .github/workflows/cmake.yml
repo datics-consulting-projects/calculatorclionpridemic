@@ -34,8 +34,8 @@ jobs:
         cd build
         cmake ..
         make
-        ./calculatorclionpridemic_test
-        pwd
+        ./test/calculator_test
+    
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
