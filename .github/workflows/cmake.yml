@@ -35,14 +35,12 @@ jobs:
         cmake ..
         make
         ./calculatorclionpridemic_test
-    - name: Package
-      run: tar czf calculatorclionpridemic.tar.gz -C build/ .
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
         name: calculatorclionpridemic
-        path: calculatorclionpridemic.tar.gz
+        path: calculatorclionpridemic
     - name: Build Docker image
       run: docker build -t projectdatics/calculatorclionpridemic:latest .
     - name: Push Docker image
