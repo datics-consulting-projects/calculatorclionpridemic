@@ -41,7 +41,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: calculatorclionpridemic
-        path: calculatorclionpridemic
+        path: /home/runner/work/calculatorclionpridemic/calculatorclionpridemic/build
     - name: Build Docker image
       run: docker build -t projectdatics/calculatorclionpridemic:latest .
     - name: Push Docker image
