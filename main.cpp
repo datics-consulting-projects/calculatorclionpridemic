@@ -31,7 +31,7 @@ int main() {
             result = calc.divide(num1, num2);
             break;
         default:
-            std::cout << "Invalid operator";
+            std::cout << "Invalid operator!!";
             return 1;
     }
 
