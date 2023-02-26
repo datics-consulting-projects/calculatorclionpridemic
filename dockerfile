@@ -5,7 +5,7 @@ FROM alpine:latest
 RUN apk add --no-cache g++ git make cmake 
 
 # Copy the source code into the image
-COPY . /main    
+ADD ./calculatorclionpridemic/calculatorclionpridemic /main    
 WORKDIR /main
 
 # Run CMake to generate the build files
