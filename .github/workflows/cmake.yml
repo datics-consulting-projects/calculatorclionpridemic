@@ -2,7 +2,7 @@ name: CMake
 
 on:
   push:
-    branches: ["main"]
+    branches: ["*"]
   pull_request:
     branches: [ "main" ]
 
@@ -15,18 +15,34 @@ jobs:
     # The CMake configure and build commands are platform agnostic and should work equally well on Windows or Mac.
     # You can convert this to a matrix build if you need cross-platform coverage.
     # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Login to Docker Hub
+    - name: Check out branch
+      uses: actions/checkout@v3
+
+    - name: Build and Test
+      run: |
+        mkdir build
+        cd build
+        cmake ..
+        make
+        ./test/calculator_test
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: calculatorclionpridemic
+        path: /home/azureuser/actions-runner/_work/calculatorclionpridemic/calculatorclionpridemic/build
+
+    - name: Build Docker image
+      run: docker build -t projectdatics/calculatorclionpridemic:latest .
+
+    - name: Push Docker image
       uses: docker/login-action@v2
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN}}
-    - name: Build Docker Image
-      uses: docker/build-push-action@v3
-      with:
-        push: true
-        tags: projectdatics/calculatorpridemic:${{ github.sha }}
+        password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+        
+    - run: docker push projectdatics/calculatorclionpridemic:latest
 
